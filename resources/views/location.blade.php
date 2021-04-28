@@ -5,11 +5,15 @@
 
 <main>
     <div class="container">
-        <h4>Tvoja ip: {{ $ip }}</h4>
-        <p>{{ $gps }}</p>
-        <p>{{ $city }}</p>
-        <p>{{ $country }}</p>
-        <p>Hlavné mesto je {{ $capital }}</p>
+        @if( isset($notfound) )
+            mesto sa nedá lokalizovať alebo sa nachádzate na vidieku
+        @else
+            <h4>Tvoja ip: {{ $ip }}</h4>
+            <p>{{ $gps }}</p>
+            <p>{{ $city }}</p>
+            <p>{{ $country }}</p>
+            <p>Hlavné mesto je {{ $capital }}</p>
+        @endif
 
     </div>
 </main>

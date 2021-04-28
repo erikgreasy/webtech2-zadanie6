@@ -14,6 +14,8 @@ use App\Http\Controllers\PageController;
 |
 */
 $base_route = basename(base_path());
+// $base_route = '';
+// die($base_route);
 
 Route::get($base_route . '/', [PageController::class, 'home'])->name('home');
 
