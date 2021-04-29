@@ -36,6 +36,25 @@
         <div>
             @yield('content')
         </div>
+        <div class="modal" tabindex="-1" role="dialog" id="myModal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Súhlas so zisťovaním polohy</h5>
+                  {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button> --}}
+                </div>
+                <div class="modal-body">
+                  <p>Pre používanie stránky je potrebný súhlas so zisťovaním polohy</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" >Súhlasím</button>
+                  {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                </div>
+              </div>
+            </div>
+          </div>
     <script src="{{ asset( mix('/js/app.js') ) }}"></script>
     </body>
 </html>
