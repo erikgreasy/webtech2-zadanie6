@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -14,8 +16,9 @@ class PageController extends Controller
 
     public function home(Request $request) {
         $ip = $request->ip();
+        
         // $ip = '90.64.198.108';
-
+        $this->checkLog($ip);
         $country_info = $this->getCountryInfo($ip);
 
         if( !$country_info ) {
@@ -39,6 +42,7 @@ class PageController extends Controller
 
     public function location(Request $request) {
         $ip = $request->ip();
+        $this->checkLog($ip);
 
         $details = $this->getIpInfo($ip);
         if( !$details ) {
@@ -55,6 +59,20 @@ class PageController extends Controller
             'city'  => $details->city,
             'country'    => $details->country,
             'capital'   => $country_info->capital
+        ]);
+    }
+
+    public function stats(Request $request) {
+        
+        $ip = $request->ip();
+        // $ip = '90.64.198.108';
+
+        $this->checkLog($ip);
+
+        $logs = DB::table('logs')->groupBy('country')->selectRaw('country, sum(visits) as visits')->get();
+
+        return view('stats', [
+            'logs'  => $logs
         ]);
     }
 
@@ -77,5 +95,44 @@ class PageController extends Controller
         return $details;
     }
 
+    private function checkLog($ip) {
+        $country_info = $this->getCountryInfo($ip);
+
+        $log = Log::where('ip', $ip)->first();
+
+       
+        if( !$country_info ) {
+            if( !$log ) {
+                $log = new Log();
+                $log->ip = $ip;
+                $log->visits = 1;
+                $log->country = null;
+                $log->city = null;
+                $log->save();
+            }
+    
+            if( $log->isLoggable() ) {
+                $log->visits += 1;
+                $log->save();
+            }
+            
+        }
+
+        $details = $this->getIpInfo($ip);
+
+        if( !$log ) {
+            $log = new Log();
+            $log->ip = $ip;
+            $log->visits = 1;
+            $log->country = $details->country;
+            $log->city = isset($details->city) ? $details->city : null;
+            $log->save();
+        }
+
+        if( $log->isLoggable() ) {
+            $log->visits += 1;
+            $log->save();
+        }
+    }
 
 }
