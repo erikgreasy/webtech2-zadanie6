@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="{{ asset( mix('/css/app.css') ) }}">
     </head>
     <body class="antialiased">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -36,6 +36,6 @@
         <div>
             @yield('content')
         </div>
-    <script src="{{ mix('/js/app.js') }}"></script>
+    <script src="{{ asset( mix('/js/app.js') ) }}"></script>
     </body>
 </html>
