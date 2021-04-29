@@ -14,9 +14,8 @@ use App\Http\Controllers\PageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-$base_route = basename(base_path());
-$base_route = '';
-// die($base_route);
+
+$base_route = env('BASE_URL', '');
 
 Route::get($base_route . '/', [PageController::class, 'home'])->name('home');
 
