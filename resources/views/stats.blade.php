@@ -22,7 +22,7 @@
                     </td>
                     <td>
                         @if($log->country)
-                            <a href="{{ route('countryLogs', 'SK') }}">
+                            <a href="{{ route('countryLogs', $log->country) }}">
                                 {{ $log->country }}
                             </a>
                         @else
